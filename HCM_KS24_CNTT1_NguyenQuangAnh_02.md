@@ -1,18 +1,20 @@
 Câu 1:
 1. Lỗ hổng thao tác giá từ phía Client:
+
 -Vị trí lỗi: Dòng order.setTotalPrice(request.getUnitPrice() * request.getQuantity());
 lấy trực tiếp đơn giá (unitPrice) từ orderRequestDTO do người dùng gửi lên thay vì truy xuất từ cơ sở dữ liệu
 
 -Hậu quả: Kẻ tấn công có thể can thiệp vào gói tin HTTP request, sửa unitPrice thành 0,1 hoặc một số âm. Hậu quả là
 khách hàng mua được hàng giá trị cao với giá thấp, gây thâất thoát tài chính cho doanh nghiệp.
 
-2.Lỗi tranh chấp dữ liệu đồng thời:
+2. Lỗi tranh chấp dữ liệu đồng thời:
 - Vị trí lỗi: if(products.getStock() >= request.getQuantity()); và cập nhật tồn khi product.setStock(....) được
 thực hiện tuàn tự trên bộ nhớ ứng dụng mà không có cơ chế khóa hay xử lý đồng bộ dưới Database.
 
 -Hậu quả: Xảy ra tình trạng bán vượt quá số lượng tồn kho thực tế hoặc âm kho, dẫn đến không có hàng giao cho khách.
 
 Câu 2: Giải pháp:
+
 1. Khắc phục lỗ hổng thao túng giá:
 
 -Xóa trường unitPrice khỏi lớp orderRequestDTO
